@@ -1,0 +1,6 @@
+# Project exclude paths
+/hello-multi-mockservice/target/
+/hello-multi-model/target/
+/hello-multi-service/target/
+/hello-multi-ui/target/
+/target/
