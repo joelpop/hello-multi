@@ -55,13 +55,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <!-- TODO: remove temporary transitive dependency for spring-boot-starter-test when no longer needed -->
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>2.0</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>

@@ -14,7 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
  * Base class for all Testbench tests, allowing you to change the applicable driver,
  * test URL or other configurations in one place.
  */
-class BrowserDriverTestBase extends BrowserTestBase implements DriverSupplier {
+public class BrowserDriverTestBase extends BrowserTestBase implements DriverSupplier {
     public final String CONTEXT_ROOT = "http://%s:8080".formatted(IPAddress.findSiteLocalAddress());
 
     @Override

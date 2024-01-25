@@ -1,6 +1,11 @@
-# Project exclude paths
-/hello-multi-mockservice/target/
-/hello-multi-model/target/
-/hello-multi-service/target/
-/hello-multi-ui/target/
+# .gitignore
+
+*.iml
+rebel.xml
+
+.idea/
+
+/hello-multi-ui/frontend/generated/
+
+/*/target/
 /target/

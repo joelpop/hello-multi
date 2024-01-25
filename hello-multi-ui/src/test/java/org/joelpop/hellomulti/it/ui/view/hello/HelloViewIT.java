@@ -1,7 +1,7 @@
-package org.joelpop.hellomulti.it.ui.view;
+package org.joelpop.hellomulti.it.ui.view.hello;
 
 import com.vaadin.testbench.BrowserTest;
-import org.joelpop.hellomulti.it.ui.view.pageobject.HelloViewElement;
+import org.joelpop.hellomulti.it.ui.view.BrowserDriverTestBase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -13,6 +13,9 @@ class HelloViewIT extends BrowserDriverTestBase {
         super.setUp();
     }
 
+    /*
+     * logic of tests
+     */
     void setName_clickButton_notificationIsShown(String name, String expectedName) {
         var helloViewElement = $(HelloViewElement.class).onPage().first();
 
@@ -27,11 +30,18 @@ class HelloViewIT extends BrowserDriverTestBase {
         Assertions.assertEquals("[...] Hello, %s!".formatted(expectedName), greetingWithoutTimestamp);
     }
 
+
+    /*
+     * Test with empty name.
+     */
     @BrowserTest
     void setNameAnonymous_clickButton_notificationIsShown() {
         setName_clickButton_notificationIsShown("", "Anonymous");
     }
 
+    /*
+     * Test with supplied name.
+     */
     @BrowserTest
     void setNameTest_clickButton_notificationIsShown() {
         setName_clickButton_notificationIsShown("Test", "Test");

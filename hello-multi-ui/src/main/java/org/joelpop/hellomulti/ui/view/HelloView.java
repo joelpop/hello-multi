@@ -19,8 +19,6 @@ import java.time.format.DateTimeFormatter;
 @PageTitle("Hello Multi")
 public class HelloView extends Composite<HorizontalLayout> {
     public static final String ID = "hello-view";
-    public static final String NAME_TEXT_FIELD_ID = "nameTextField";
-    public static final String HELLO_BUTTON_ID = "helloButton";
 
     private final transient GreetingService greetingService;
     private final TextField nameTextField;
@@ -34,12 +32,10 @@ public class HelloView extends Composite<HorizontalLayout> {
         setId(ID);
 
         nameTextField = new TextField();
-        nameTextField.setId(NAME_TEXT_FIELD_ID);
         nameTextField.setPlaceholder("your name");
         nameTextField.setClearButtonVisible(true);
 
         var helloButton = new Button("Hello");
-        helloButton.setId(HELLO_BUTTON_ID);
         helloButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         helloButton.addClickShortcut(Key.ENTER);
         helloButton.addClickListener(this::onButtonClick);
