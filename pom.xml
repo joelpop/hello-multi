@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.2.2</version>
         <relativePath/>
     </parent>
 
@@ -20,21 +20,49 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>24.3.3</vaadin.version>
-
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
+        <vaadin.version>24.3.5</vaadin.version>
+        <testng.version>7.10.2</testng.version>
+        <assertj.version>3.25.3</assertj.version>
+        <mockito.version>5.11.0</mockito.version>
+        <instancio.version>4.5.1</instancio.version>
     </properties>
 
     <modules>
         <module>hello-multi-ui</module>
-        <module>hello-multi-model</module>
-        <module>hello-multi-service</module>
-        <module>hello-multi-mockservice</module>
+        <module>hello-multi-uimodel</module>
+        <module>hello-multi-jpaservice</module>
+        <module>hello-multi-jpaclient</module>
+        <module>hello-multi-shared</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.joelpop</groupId>
+                <artifactId>hello-multi-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.joelpop</groupId>
+                <artifactId>hello-multi-uimodel</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.joelpop</groupId>
+                <artifactId>hello-multi-jpaservice</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.joelpop</groupId>
+                <artifactId>hello-multi-jpaclient</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.joelpop</groupId>
+                <artifactId>hello-multi-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
@@ -44,27 +72,54 @@
             </dependency>
 
             <dependency>
-                <groupId>org.joelpop</groupId>
-                <artifactId>hello-multi-ui</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>${testng.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.joelpop</groupId>
-                <artifactId>hello-multi-model</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.joelpop</groupId>
-                <artifactId>hello-multi-service</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.joelpop</groupId>
-                <artifactId>hello-multi-mockservice</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.instancio</groupId>
+                <artifactId>instancio-core</artifactId>
+                <version>${instancio.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -78,7 +133,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
                     <configuration>
                         <rerunFailingTestsCount>3</rerunFailingTestsCount>
                     </configuration>
@@ -87,7 +141,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven-failsafe-plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>

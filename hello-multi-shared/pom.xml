@@ -9,18 +9,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>hello-multi-mockservice</artifactId>
-    <name>Hello Multi Mock Service Implementation</name>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.joelpop</groupId>
-            <artifactId>hello-multi-uimodel</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-    </dependencies>
+    <artifactId>hello-multi-shared</artifactId>
+    <name>Hello Multi Shared</name>
 </project>

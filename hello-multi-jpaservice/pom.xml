@@ -9,13 +9,21 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>hello-multi-mockservice</artifactId>
-    <name>Hello Multi Mock Service Implementation</name>
+    <artifactId>hello-multi-jpaservice</artifactId>
+    <name>Hello Multi JPA Service Implementation</name>
 
     <dependencies>
         <dependency>
             <groupId>org.joelpop</groupId>
             <artifactId>hello-multi-uimodel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joelpop</groupId>
+            <artifactId>hello-multi-jpaclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joelpop</groupId>
+            <artifactId>hello-multi-shared</artifactId>
         </dependency>
 
         <dependency>

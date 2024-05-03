@@ -5,7 +5,5 @@ rebel.xml
 
 .idea/
 
-/hello-multi-ui/frontend/generated/
-
-/*/target/
-/target/
+**/*/generated/
+**/*/target/
