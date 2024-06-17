@@ -6,12 +6,12 @@ import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import org.joelpop.hellomulti.uimodel.model.Greeting;
 import org.joelpop.hellomulti.shared.util.FunctionalInterfaceUtil;
 
-public class DeleteConfirmDialog extends ConfirmDialog {
+public class DeleteGreetingConfirmDialog extends ConfirmDialog {
 
     private final transient Greeting greeting;
 
-    public DeleteConfirmDialog(Greeting greeting,
-                               ComponentEventListener<ConfirmEvent> confirmListener) {
+    public DeleteGreetingConfirmDialog(Greeting greeting,
+                                       ComponentEventListener<ConfirmEvent> confirmListener) {
         super("Delete Greeting",
                 "Delete from history greeting \"" + greeting.getMessage() +
                         "\" on " + greeting.getTimestamp() + "?",

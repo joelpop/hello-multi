@@ -1,31 +1,61 @@
 package it.ui.view.hello;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
+import com.vaadin.flow.component.html.testbench.AnchorElement;
 import com.vaadin.flow.component.notification.testbench.NotificationElement;
 import com.vaadin.flow.component.orderedlayout.testbench.HorizontalLayoutElement;
 import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
+import com.vaadin.testbench.HasElementQuery;
 import com.vaadin.testbench.annotations.Attribute;
+import it.ui.view.greetinghistory.GreetingHistoryViewElement;
 import org.joelpop.hellomulti.ui.view.hello.HelloView;
-import org.openqa.selenium.NoSuchElementException;
 
-@Attribute(name = "id", value = HelloView.ROUTE)
+/**
+ * The page model object for HelloView.
+ */
+@Attribute(name = "id", value = HelloView.ID)
 public class HelloViewElement extends HorizontalLayoutElement {
 
     /**
-     * Enter the supplied name value, click the hello button, and return the notification.
+     * Class method to find and return the HelloViewElement.
+     *
+     * @param hasElementQuery the context of the query
+     * @return the HelloViewElement
+     */
+    public static HelloViewElement get(HasElementQuery hasElementQuery) {
+        return hasElementQuery.$(HelloViewElement.class)
+                .onPage()
+                .first();
+    }
+
+    /**
+     * Enter the supplied name value, click the greet button, and return the notification.
      *
      * @param name the value to enter into the text field
      * @return the resultant pop-up notification
      */
     public NotificationElement sayHello(String name) {
-        // get the name text field element and set its value
+        // set the value of the name text field
         $nameTextField().setValue(name);
 
-        // get the button element and click it
-        $nameButton().click();
+        // click the button
+        $greetButton().click();
 
-        // return the resultant pop-up notification element
+        // return the resultant pop-up notification
         return $notification();
+    }
+
+    /**
+     * Navigate to the greeting history view.
+     *
+     * @return the resultant greeting history view
+     */
+    public GreetingHistoryViewElement viewHistory() {
+        // click the link
+        $historyLink().click();
+
+        // return the resultant greeting history view
+        return $greetingHistoryView();
     }
 
     /**
@@ -35,20 +65,30 @@ public class HelloViewElement extends HorizontalLayoutElement {
      */
     private TextFieldElement $nameTextField() {
         return $(TextFieldElement.class)
-                .attribute("placeholder", "your name")
-                .first();
+                .withPropertyValue(TextFieldElement::getPlaceholder, "your name")
+                .single();
     }
 
     /**
-     * Find the hello button element.
+     * Find the greet button element.
      *
-     * @return the hello button element
+     * @return the greet button element
      */
-    private ButtonElement $nameButton() {
-        return $(ButtonElement.class).all().stream()
-                .filter(buttonElement -> buttonElement.getText().equals("Hello"))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("No element with tag <vaadin-button> found with text \"Hello\"."));
+    private ButtonElement $greetButton() {
+        return $(ButtonElement.class)
+                .withText("Greet")
+                .single();
+    }
+
+    /**
+     * Find the history link element.
+     *
+     * @return the history link element
+     */
+    private AnchorElement $historyLink() {
+        return $(AnchorElement.class)
+                .withText("See previous visitors →")
+                .single();
     }
 
     /**
@@ -60,5 +100,9 @@ public class HelloViewElement extends HorizontalLayoutElement {
         return $(NotificationElement.class)
                 .onPage()
                 .first();
+    }
+
+    private GreetingHistoryViewElement $greetingHistoryView() {
+        return GreetingHistoryViewElement.get(this);
     }
 }

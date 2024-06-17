@@ -20,11 +20,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>24.3.5</vaadin.version>
+        <vaadin.version>24.4.1</vaadin.version>
         <testng.version>7.10.2</testng.version>
         <assertj.version>3.25.3</assertj.version>
-        <mockito.version>5.11.0</mockito.version>
-        <instancio.version>4.5.1</instancio.version>
+        <mockito.version>5.12.0</mockito.version>
+        <instancio.version>4.6.0</instancio.version>
     </properties>
 
     <modules>

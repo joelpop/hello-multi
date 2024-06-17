@@ -7,15 +7,15 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.theme.lumo.LumoUtility;
-import org.joelpop.hellomulti.uimodel.service.GreetingService;
 import org.joelpop.hellomulti.ui.view.history.GreetingHistoryView;
+import org.joelpop.hellomulti.uimodel.service.GreetingService;
 
 /**
  * A Hello World view that uses a service to log greetings.
@@ -33,6 +33,7 @@ import org.joelpop.hellomulti.ui.view.history.GreetingHistoryView;
 @RouteAlias("")
 @PageTitle(HelloView.PAGE_TITLE)
 public class HelloView extends Composite<HorizontalLayout> {
+    public static final String ID = "hello-view";
     public static final String ROUTE = "hello";
     public static final String PAGE_TITLE = "Hello";
 
@@ -42,6 +43,8 @@ public class HelloView extends Composite<HorizontalLayout> {
 
     public HelloView(GreetingService greetingService) {
         this.greetingService = greetingService;
+
+        setId(ID);
 
         // name text field
         nameTextField = new TextField("Name");
@@ -60,8 +63,8 @@ public class HelloView extends Composite<HorizontalLayout> {
 
         // content
         var content = getContent();
-        content.addClassNames(LumoUtility.JustifyContent.CENTER,
-                LumoUtility.AlignItems.BASELINE);
+        content.setAlignItems(FlexComponent.Alignment.BASELINE);
+        content.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         content.add(nameTextField);
         content.add(greetButton);
         content.add(historyRouterLink);

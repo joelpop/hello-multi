@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog.ConfirmEvent;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.ExtendedClientDetails;
@@ -19,10 +20,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import elemental.json.JsonArray;
-import org.joelpop.hellomulti.uimodel.service.GreetingService;
-import org.joelpop.hellomulti.uimodel.model.Greeting;
 import org.joelpop.hellomulti.ui.util.PageUtil;
 import org.joelpop.hellomulti.ui.view.hello.HelloView;
+import org.joelpop.hellomulti.uimodel.model.Greeting;
+import org.joelpop.hellomulti.uimodel.service.GreetingService;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -39,6 +40,10 @@ import java.util.Optional;
  * | | |    <- Back     |      |    Refresh    | |    Clear    | | |
  * | | +----------------+      +---------------+ +-------------+ | |
  * | +-----------------------------------------------------------+ |
+ * | +-greetingHistoryPlaceholder(VerticalLayout)----------------+ |
+ * | |        There are no greetings in the history log.         | |
+ * | |        Press the ← Back link above and create one.        | |
+ * | +-----------------------------------------------------------+ |
  * | +-greetingHistoryVirtualList(VirtualList)-------------------+ |
  * | | +-(GreetingRenderer)------------------------------------+ | |
  * | | | ${item.timestamp} ${item.name} ${item.message}    (X) | | |
@@ -53,8 +58,10 @@ import java.util.Optional;
 @Route(GreetingHistoryView.ROUTE)
 @PageTitle(GreetingHistoryView.PAGE_TITLE)
 public class GreetingHistoryView extends Composite<VerticalLayout> implements AfterNavigationObserver {
+    public static final String ID = "greeting-history-view";
     public static final String ROUTE = "greeting-history";
     public static final String PAGE_TITLE = "Greeting History";
+    public static final String MAX_WIDTH = "50em";
 
     private final transient GreetingService greetingService;
     private final VerticalLayout greetingHistoryPlaceholder;
@@ -64,6 +71,8 @@ public class GreetingHistoryView extends Composite<VerticalLayout> implements Af
 
     public GreetingHistoryView(GreetingService greetingService) {
         this.greetingService = greetingService;
+
+        setId(ID);
 
         // back router link
         var backRouterLink = new RouterLink("← Back", HelloView.class);
@@ -80,6 +89,8 @@ public class GreetingHistoryView extends Composite<VerticalLayout> implements Af
         // button bar
         var buttonBar = new HorizontalLayout();
         buttonBar.setWidthFull();
+        buttonBar.setMaxWidth(MAX_WIDTH);
+        buttonBar.setAlignItems(FlexComponent.Alignment.BASELINE);
         buttonBar.add(backRouterLink);
         buttonBar.addAndExpand(new Span());
         buttonBar.add(refreshButton);
@@ -88,20 +99,25 @@ public class GreetingHistoryView extends Composite<VerticalLayout> implements Af
         // greeting history placeholder
         var message = new Span("There are no greetings in the history log.");
         var instructions = new Span("Press the ← Back link above and create one.");
+
         greetingHistoryPlaceholder = new VerticalLayout();
         greetingHistoryPlaceholder.setWidthFull();
+        greetingHistoryPlaceholder.setMaxWidth(MAX_WIDTH);
         greetingHistoryPlaceholder.setSpacing(false);
-        greetingHistoryPlaceholder.addClassNames(LumoUtility.AlignItems.CENTER);
+        greetingHistoryPlaceholder.setAlignItems(FlexComponent.Alignment.CENTER);
         greetingHistoryPlaceholder.add(message);
         greetingHistoryPlaceholder.add(instructions);
 
         // greeting history virtual list
         greetingHistoryVirtualList = new VirtualList<>();
         greetingHistoryVirtualList.setSizeFull();
+        greetingHistoryVirtualList.setMaxWidth(MAX_WIDTH);
+        greetingHistoryVirtualList.addClassNames(LumoUtility.AlignSelf.AUTO);
         greetingHistoryVirtualList.setRenderer(greetingRenderer());
 
         var content = getContent();
         content.setSizeFull();
+        content.setAlignItems(FlexComponent.Alignment.CENTER);
         content.add(buttonBar);
         content.add(greetingHistoryPlaceholder);
         content.add(greetingHistoryVirtualList);
@@ -151,6 +167,7 @@ public class GreetingHistoryView extends Composite<VerticalLayout> implements Af
                         LumoUtility.Display.FLEX,
                         LumoUtility.JustifyContent.BETWEEN,
                         LumoUtility.AlignItems.BASELINE,
+                        LumoUtility.Padding.Horizontal.XSMALL,
                         LumoUtility.Background.CONTRAST_5))
                 .withProperty("timestamp", this::formatTimestamp)
                 .withProperty("name", Greeting::getName)
@@ -181,12 +198,12 @@ public class GreetingHistoryView extends Composite<VerticalLayout> implements Af
     }
 
     private void onDeleteGreetingClick(Greeting greeting, JsonArray ignored) {
-        new DeleteConfirmDialog(greeting, this::onConfirmDeleteGreeting).open();
+        new DeleteGreetingConfirmDialog(greeting, this::onConfirmDeleteGreeting).open();
     }
 
     private void onConfirmDeleteGreeting(ConfirmEvent event) {
-        if (event.getSource() instanceof DeleteConfirmDialog deleteConfirmDialog) {
-            greetingService.delete(deleteConfirmDialog.getGreeting());
+        if (event.getSource() instanceof DeleteGreetingConfirmDialog deleteGreetingConfirmDialog) {
+            greetingService.delete(deleteGreetingConfirmDialog.getGreeting());
             refreshGreetingHistoryVirtualList();
         }
     }
