@@ -39,7 +39,7 @@ class HelloViewTest extends SpringUIUnitTest {
         // click the button
         $greetButton().click();
 
-        // verify the greeting
+        // verify the anonymous greeting uses "World"
         assertThat($notification().getText())
                 .isEqualTo("Hello, World!");
     }
@@ -70,11 +70,42 @@ class HelloViewTest extends SpringUIUnitTest {
                 .isEqualTo("Hello, Waldo!");
     }
 
+    @Test
+    void greetWithClearedName() {
+        // set the name
+        $nameTextField().setValue("Waldo");
+        // clear the name
+        $nameTextField().clear();
+
+        // click the button
+        $greetButton().click();
+
+        // verify the greeting
+        assertThat($notification().getText())
+                .isEqualTo("Hello, World!");
+    }
+
+    @Test
+    void greetWithChangedName() {
+        // set the name
+        $nameTextField().setValue("Waldo");
+        // reset the name
+        $nameTextField().setValue("Wilbur");
+
+        // click the button
+        $greetButton().click();
+
+        // verify the greeting
+        assertThat($notification().getText())
+                .isEqualTo("Hello, Wilbur!");
+    }
+
     // query methods
 
     private TextFieldTester<TextField, String> $nameTextField() {
         // find the text field and get its tester
         var nameTextField = $helloView.find(TextField.class)
+                .withCaption("Name")
                 .withPropertyValue(TextField::getPlaceholder, "your name")
                 .single();
         return test(nameTextField);

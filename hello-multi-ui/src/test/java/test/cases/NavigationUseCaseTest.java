@@ -12,11 +12,11 @@ import test.ui.view.hello.HelloViewTester;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit test cases for greeting history.
+ * Tests for the navigation use case.
  */
 @SpringBootTest(classes = Application.class)
 @ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class NavigationTest extends SpringUIUnitTest {
+class NavigationUseCaseTest extends SpringUIUnitTest {
 
     private HelloViewTester $helloView;
 
@@ -28,7 +28,7 @@ class NavigationTest extends SpringUIUnitTest {
     }
 
     /*
-     * Navigate from the hello view to the history view and then back.
+     * Navigate from the hello view to the greeting history view and then back.
      */
     @Test
     void navToHistoryAndBack() {
@@ -40,10 +40,10 @@ class NavigationTest extends SpringUIUnitTest {
                 .isTrue();
 
         // click "back" link to nav to hello view
-        var $backView = $greetingHistoryView.goBack();
+        var $backHelloView = $greetingHistoryView.goBack();
 
-        // verify the navigation was successful
-        assertThat($backView.isUsable())
+        // verify the return navigation was successful
+        assertThat($backHelloView.isUsable())
                 .isTrue();
     }
 }

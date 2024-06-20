@@ -21,12 +21,11 @@ import test.ui.view.greetinghistory.GreetingHistoryViewTester;
 public class HelloViewTester extends ComponentTester<HelloView>
         implements TesterWrappers {
 
-    public static <T extends Component> HelloViewTester get(ComponentTester<T> componentTester) {
-        return new HelloViewTester(componentTester.find(HelloView.class)
-                .from(null)
-                .single());
-    }
-
+    /**
+     * Wrap given component for testing.
+     *
+     * @param helloView target component
+     */
     public HelloViewTester(HelloView helloView) {
         super(helloView);
         ensureComponentIsUsable();
@@ -35,10 +34,10 @@ public class HelloViewTester extends ComponentTester<HelloView>
     /**
      * Enter the supplied name value, click the greet button, and return the notification.
      *
-     * @param name the value to enter into the text field
+     * @param name the value to enter into the text field; use {@code null} or an empty String to clear it
      * @return the resultant pop-up notification
      */
-    public NotificationTester<Notification> sayHello(String name) {
+    public NotificationTester<Notification> greetWithName(String name) {
         // set the value of the name text field
         $nameTextField().setValue(name);
 
@@ -59,50 +58,69 @@ public class HelloViewTester extends ComponentTester<HelloView>
         $historyLink().click();
 
         // return the resultant greeting history view
-        return GreetingHistoryViewTester.get(this);
+        return GreetingHistoryViewTester.$find(this);
     }
 
     /**
-     * Find the name text field tester.
+     * Find the hello view and return its tester.
+     *
+     * @param componentTester the current view's tester
+     * @return the greeting history view tester
+     * @param <T> the type of the {@link ComponentTester}
+     */
+    public static <T extends Component> HelloViewTester $find(ComponentTester<T> componentTester) {
+        var helloView = componentTester.find(HelloView.class)
+                .from(null)
+                .single();
+        return new HelloViewTester(helloView);
+    }
+
+    /**
+     * Find the name text field and get its tester.
      *
      * @return the name text field tester.
      */
     public TextFieldTester<TextField, String> $nameTextField() {
-        return test(find(TextField.class)
+        var nameTextField = find(TextField.class)
+                .withCaption("Name")
                 .withPropertyValue(TextFieldBase::getPlaceholder, "your name")
-                .single());
+                .single();
+        return test(nameTextField);
     }
 
     /**
-     * Find the greet button tester.
+     * Find the greet button and get its tester.
      *
      * @return the greet button tester.
      */
     public ButtonTester<Button> $greetButton() {
-        return test(find(Button.class)
+        var greetButton = find(Button.class)
                 .withCaption("Greet")
-                .single());
+                .single();
+        return test(greetButton);
     }
 
     /**
-     * Find the history link tester.
+     * Find the history link and get its tester.
      *
      * @return the history link tester.
      */
     public RouterLinkTester<RouterLink> $historyLink() {
-        return new RouterLinkTester<>(find(RouterLink.class)
+        var historyLink = find(RouterLink.class)
                 .withText("See previous visitors →")
-                .single());
+                .single();
+        return new RouterLinkTester<>(historyLink);
     }
 
     /**
-     * Find the notification tester.
+     * Find the first notification and get its tester.
      *
-     * @return the notification tester.
+     * @return the first notification's tester.
      */
     public NotificationTester<Notification> $notification() {
-        return test(new ComponentQuery<>(Notification.class)
-                .first());
+        var notification = new ComponentQuery<>(Notification.class)
+                .first();
+        return test(notification);
     }
 
 }

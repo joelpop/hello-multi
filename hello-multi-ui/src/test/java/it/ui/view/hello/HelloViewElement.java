@@ -31,10 +31,10 @@ public class HelloViewElement extends HorizontalLayoutElement {
     /**
      * Enter the supplied name value, click the greet button, and return the notification.
      *
-     * @param name the value to enter into the text field
+     * @param name the value to enter into the text field; use {@code null} or an empty String to clear it
      * @return the resultant pop-up notification
      */
-    public NotificationElement sayHello(String name) {
+    public NotificationElement greetWithName(String name) {
         // set the value of the name text field
         $nameTextField().setValue(name);
 
@@ -65,6 +65,7 @@ public class HelloViewElement extends HorizontalLayoutElement {
      */
     private TextFieldElement $nameTextField() {
         return $(TextFieldElement.class)
+                .withLabel("Name")
                 .withPropertyValue(TextFieldElement::getPlaceholder, "your name")
                 .single();
     }
@@ -92,9 +93,9 @@ public class HelloViewElement extends HorizontalLayoutElement {
     }
 
     /**
-     * Find the notification element.
+     * Find the first notification element.
      *
-     * @return the notification element
+     * @return the first notification element
      */
     private NotificationElement $notification() {
         return $(NotificationElement.class)

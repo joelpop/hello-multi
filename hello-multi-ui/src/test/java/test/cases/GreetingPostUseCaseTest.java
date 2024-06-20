@@ -12,11 +12,11 @@ import test.ui.view.hello.HelloViewTester;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit test cases for posting greetings.
+ * Tests for the greeting post use case.
  */
 @SpringBootTest(classes = Application.class)
 @ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class SayHelloTest extends SpringUIUnitTest {
+class GreetingPostUseCaseTest extends SpringUIUnitTest {
 
     private HelloViewTester $helloView;
 
@@ -32,7 +32,12 @@ class SayHelloTest extends SpringUIUnitTest {
      */
     @Test
     void greetWithNameEmpty() {
-        greetWithName("", "World");
+        // issue greeting
+        var $notification = $helloView.greetWithName("");
+
+        // verify the greeting
+        assertThat($notification.getText())
+                .isEqualTo("Hello, %s!", "World");
     }
 
     /*
@@ -40,7 +45,12 @@ class SayHelloTest extends SpringUIUnitTest {
      */
     @Test
     void greetWithNameWorld() {
-        greetWithName("World", "World");
+        // issue greeting
+        var $notification = $helloView.greetWithName("World");
+
+        // verify the greeting
+        assertThat($notification.getText())
+                .isEqualTo("Hello, %s!", "World");
     }
 
     /*
@@ -48,18 +58,11 @@ class SayHelloTest extends SpringUIUnitTest {
      */
     @Test
     void greetWithNameWaldo() {
-        greetWithName("Waldo", "Waldo");
-    }
-
-    /*
-     * use case flow
-     */
-    private void greetWithName(String name, String expectedName) {
         // issue greeting
-        var $notification = $helloView.sayHello(name);
+        var $notification = $helloView.greetWithName("Waldo");
 
         // verify the greeting
         assertThat($notification.getText())
-                .isEqualTo("Hello, %s!", expectedName);
+                .isEqualTo("Hello, %s!", "Waldo");
     }
 }

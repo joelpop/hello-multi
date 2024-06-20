@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * E2E test cases for posting greetings.
  */
-class SayHelloIT extends BrowserDriverTestBase {
+class GreetIT extends BrowserDriverTestBase {
 
     private HelloViewElement $helloView;
 
@@ -24,7 +24,12 @@ class SayHelloIT extends BrowserDriverTestBase {
      */
     @BrowserTest
     void greetWithNameEmpty() {
-        greetWithName("", "World");
+        // issue greeting
+        var $notification = $helloView.greetWithName("");
+
+        // verify the greeting
+        assertThat($notification.getText())
+                .isEqualTo("Hello, %s!", "World");
     }
 
     /*
@@ -32,7 +37,12 @@ class SayHelloIT extends BrowserDriverTestBase {
      */
     @BrowserTest
     void greetWithNameWorld() {
-        greetWithName("World", "World");
+        // issue greeting
+        var $notification = $helloView.greetWithName("World");
+
+        // verify the greeting
+        assertThat($notification.getText())
+                .isEqualTo("Hello, %s!", "World");
     }
 
     /*
@@ -40,18 +50,11 @@ class SayHelloIT extends BrowserDriverTestBase {
      */
     @BrowserTest
     void greetWithNameWaldo() {
-        greetWithName("Waldo", "Waldo");
-    }
-
-    /*
-     * use case flow
-     */
-    private void greetWithName(String name, String expectedName) {
         // issue greeting
-        var $notification = $helloView.sayHello(name);
+        var $notification = $helloView.greetWithName("Waldo");
 
         // verify the greeting
         assertThat($notification.getText())
-                .isEqualTo("Hello, %s!", expectedName);
+                .isEqualTo("Hello, %s!", "Waldo");
     }
 }

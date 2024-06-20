@@ -16,18 +16,6 @@ public class DeleteGreetingConfirmDialogTester extends ConfirmDialogTester
         implements TesterWrappers {
 
     /**
-     * Factory method to find and return the DeleteGreetingConfirmDialogTester.
-     *
-     * @param componentTester the context of the query
-     * @return the DeleteGreetingConfirmDialogTester
-     */
-    public static <T extends Component> DeleteGreetingConfirmDialogTester $(ComponentTester<T> componentTester) {
-        return new DeleteGreetingConfirmDialogTester(componentTester.find(DeleteGreetingConfirmDialog.class)
-                .withTextContaining("Delete Greeting")
-                .single());
-    }
-
-    /**
      * Wrap given component for testing.
      *
      * @param confirmDialog target component
@@ -46,7 +34,7 @@ public class DeleteGreetingConfirmDialogTester extends ConfirmDialogTester
         $keepButton().click();
 
         // return the current view
-        return GreetingHistoryViewTester.get(this);
+        return GreetingHistoryViewTester.$find(this);
     }
 
     /**
@@ -59,28 +47,44 @@ public class DeleteGreetingConfirmDialogTester extends ConfirmDialogTester
         $deleteButton().click();
 
         // return the current view
-        return GreetingHistoryViewTester.get(this);
+        return GreetingHistoryViewTester.$find(this);
     }
 
     /**
-     * Find the keep button tester.
+     * Find and return the DeleteGreetingConfirmDialogTester.
+     *
+     * @param componentTester the context of the query
+     * @return the DeleteGreetingConfirmDialogTester
+     * @param <T> the type of the {@link ComponentTester}
+     */
+    public static <T extends Component> DeleteGreetingConfirmDialogTester $find(ComponentTester<T> componentTester) {
+        var deleteGreetingConfirmDialog = componentTester.find(DeleteGreetingConfirmDialog.class)
+                .withTextContaining("Delete Greeting")
+                .single();
+        return new DeleteGreetingConfirmDialogTester(deleteGreetingConfirmDialog);
+    }
+
+    /**
+     * Find the keep button and get its tester.
      *
      * @return the keep button tester
      */
     private ButtonTester<Button> $keepButton() {
-        return test(find(Button.class)
+        var keepButton = find(Button.class)
                 .withText("Keep")
-                .single());
+                .single();
+        return test(keepButton);
     }
 
     /**
-     * Find the delete button tester.
+     * Find the delete button and get its tester.
      *
      * @return the delete button tester
      */
     private ButtonTester<Button> $deleteButton() {
-        return test(find(Button.class)
+        var deleteButton = find(Button.class)
                 .withText("Delete")
-                .single());
+                .single();
+        return test(deleteButton);
     }
 }

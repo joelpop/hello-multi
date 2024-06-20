@@ -36,24 +36,18 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
         ensureComponentIsUsable();
     }
 
-    public static <T extends Component> GreetingHistoryViewTester get(ComponentTester<T> componentTester) {
-        return new GreetingHistoryViewTester(componentTester.find(GreetingHistoryView.class)
-                .from(null)
-                .single());
-    }
-
     public HelloViewTester goBack() {
         // click the back link
         $backLink().click();
 
-        // return the HelloView
-        return HelloViewTester.get(this);
+        // return the HelloView tester
+        return HelloViewTester.$find(this);
     }
 
     /**
      * Refresh the greeting history.
      *
-     * @return the greeting history view
+     * @return the greeting history view tester
      */
     public GreetingHistoryViewTester refresh() {
         // click the refresh button
@@ -73,7 +67,7 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
         $clearButton().click();
 
         // return the clear greeting history confirmation dialog
-        return ClearHistoryConfirmDialogTester.$(this);
+        return ClearHistoryConfirmDialogTester.$find(this);
     }
 
     /**
@@ -90,7 +84,7 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
         $item.click();
 
         // return the delete greeting confirmation dialog
-        return DeleteGreetingConfirmDialogTester.$(this);
+        return DeleteGreetingConfirmDialogTester.$find(this);
     }
 
     public boolean isGreetingHistoryEmpty() {
@@ -123,51 +117,68 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
     }
 
     /**
-     * Find the back link tester.
+     * Find the greeting history view and return its tester.
+     *
+     * @param componentTester the current view's tester
+     * @return the greeting history view tester
+     * @param <T> the type of the {@link ComponentTester}
+     */
+    public static <T extends Component> GreetingHistoryViewTester $find(ComponentTester<T> componentTester) {
+        var greetingHistoryView = componentTester.find(GreetingHistoryView.class)
+                .from(null)
+                .single();
+        return new GreetingHistoryViewTester(greetingHistoryView);
+    }
+
+    /**
+     * Find the back link and get its tester.
      *
      * @return the back link tester.
      */
     private RouterLinkTester<RouterLink> $backLink() {
-        return new RouterLinkTester<>(find(RouterLink.class)
+        var backLink = find(RouterLink.class)
                 .withText("← Back")
-                .single());
+                .single();
+        return new RouterLinkTester<>(backLink);
     }
 
     /**
-     * Find the refresh button tester.
+     * Find the refresh button and get its tester.
      *
      * @return the refresh button tester.
      */
     private ButtonTester<Button> $refreshButton() {
-        return test(find(Button.class)
+        var refreshButton = find(Button.class)
                 .withText("Refresh")
-                .single());
+                .single();
+        return test(refreshButton);
     }
 
     /**
-     * Find the clear button tester.
+     * Find the clear button and get its tester.
      *
      * @return the clear button tester.
      */
     private ButtonTester<Button> $clearButton() {
-        return test(find(Button.class)
+        var clearButton = find(Button.class)
                 .withText("Clear")
-                .single());
+                .single();
+        return test(clearButton);
     }
 
     /**
-     * Find the greeting history virtual list tester.
+     * Find the greeting history virtual list and get its tester.
      *
      * @return the greeting history virtual list tester
      */
-    @SuppressWarnings("unchecked")
     private VirtualListTester<VirtualList<Greeting>, Greeting> $greetingHistoryVirtualList() {
-        return test((VirtualList<Greeting>) find(VirtualList.class)
-                .single());
+        var greetingHistoryVirtualList = find(VirtualList.class)
+                .single();
+        return test(greetingHistoryVirtualList, Greeting.class);
     }
 
     /**
-     * Find a row in the greeting history virtual list tester.
+     * Find a row in the greeting history virtual list and get its tester.
      *
      * @param index the requested row
      * @return the indicated row tester from the greeting history virtual list tester

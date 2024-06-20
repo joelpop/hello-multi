@@ -18,16 +18,16 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit test cases for greeting history.
+ * Tests for the greeting history list use case.
  */
 @SpringBootTest(classes = Application.class)
 @ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class GreetingHistoryTest extends SpringUIUnitTest {
+class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
 
     private final GreetingService greetingService;
     private HelloViewTester $helloView;
 
-    public GreetingHistoryTest(@Autowired GreetingService greetingService) {
+    public GreetingHistoryUseCaseTest(@Autowired GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
@@ -55,36 +55,36 @@ class GreetingHistoryTest extends SpringUIUnitTest {
     }
 
     /*
-     * Say hello and verify greeting is correctly logged.
+     * Greet and verify greeting is correctly logged.
      */
     @Test
-    void sayHelloOnceAndVerifyGreetingHistory() {
+    void greetOnceAndVerifyGreetingHistory() {
         // generate a name
         var name = capitalize(Instancio.of(String.class)
                 .create());
 
-        sayHelloAndVerifyGreetingHistory(name);
+        greetAndVerifyGreetingHistory(name);
     }
 
     /*
-     * Say hello multiple times and verify greetings are correctly logged.
+     * Greet multiple times and verify greetings are correctly logged.
      */
     @Test
-    void sayHelloALotAndVerifyGreetingHistory() {
+    void greetALotAndVerifyGreetingHistory() {
         // generate names
         var names = Instancio.stream(String.class)
                 .limit(100)
-                .map(GreetingHistoryTest::capitalize)
+                .map(GreetingHistoryUseCaseTest::capitalize)
                 .toArray(String[]::new);
 
-        sayHelloAndVerifyGreetingHistory(names);
+        greetAndVerifyGreetingHistory(names);
     }
 
-    private void sayHelloAndVerifyGreetingHistory(String... names) {
+    private void greetAndVerifyGreetingHistory(String... names) {
         var nameList = Arrays.asList(names);
 
         // issue a greeting for each name
-        nameList.forEach($helloView::sayHello);
+        nameList.forEach($helloView::greetWithName);
 
         // click "history" link to nav to greeting history view
         var $greetingHistoryView = $helloView.viewHistory();

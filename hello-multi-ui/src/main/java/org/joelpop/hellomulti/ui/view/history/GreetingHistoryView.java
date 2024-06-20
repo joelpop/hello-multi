@@ -31,7 +31,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
- * A greeting history view for listing and maintaining them.
+ * A history view for listing and maintaining greetings.
  *
  * <pre>
  * +-content(VerticalLayout)---------------------------------------+

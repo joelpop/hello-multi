@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This module/class is still a work in progress...
+ */
 @Service
 @Primary
 public class MockGreetingService implements GreetingService {

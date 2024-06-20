@@ -46,7 +46,7 @@ class GreetingHistoryIT extends BrowserDriverTestBase {
                 .toList();
 
         // issue a greeting for each name
-        names.forEach($helloView::sayHello);
+        names.forEach($helloView::greetWithName);
 
         // click "history" link to nav to greeting history view
         var $greetingHistoryView = $helloView.viewHistory();

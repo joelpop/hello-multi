@@ -62,4 +62,34 @@ class HelloViewTest extends SpringUIUnitTest {
         assertThat($helloView.$notification().getText())
                 .isEqualTo("Hello, Waldo!");
     }
+
+    @Test
+    void greetWithClearedName() {
+        // set the name
+        $helloView.$nameTextField().setValue("Waldo");
+        // clear the name
+        $helloView.$nameTextField().clear();
+
+        // click the button
+        $helloView.$greetButton().click();
+
+        // verify the greeting
+        assertThat($helloView.$notification().getText())
+                .isEqualTo("Hello, World!");
+    }
+
+    @Test
+    void greetWithChangedName() {
+        // set the name
+        $helloView.$nameTextField().setValue("Waldo");
+        // reset the name
+        $helloView.$nameTextField().setValue("Wilbur");
+
+        // click the button
+        $helloView.$greetButton().click();
+
+        // verify the greeting
+        assertThat($helloView.$notification().getText())
+                .isEqualTo("Hello, Wilbur!");
+    }
 }

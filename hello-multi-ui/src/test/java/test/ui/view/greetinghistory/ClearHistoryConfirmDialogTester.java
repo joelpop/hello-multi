@@ -1,6 +1,5 @@
 package test.ui.view.greetinghistory;
 
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonTester;
@@ -15,18 +14,6 @@ import org.joelpop.hellomulti.ui.view.history.ClearHistoryConfirmDialog;
  */
 public class ClearHistoryConfirmDialogTester extends ConfirmDialogTester
         implements TesterWrappers {
-
-    /**
-     * Factory method to find and return the ClearHistoryConfirmDialogTester.
-     *
-     * @param componentTester the context of the query
-     * @return the ClearHistoryConfirmDialogTester
-     */
-    public static <T extends Component> ClearHistoryConfirmDialogTester $(ComponentTester<T> componentTester) {
-        return new ClearHistoryConfirmDialogTester(componentTester.find(ClearHistoryConfirmDialog.class)
-                .withTextContaining("Clear Greeting History")
-                .single());
-    }
 
     /**
      * Wrap given component for testing.
@@ -47,7 +34,7 @@ public class ClearHistoryConfirmDialogTester extends ConfirmDialogTester
         $keepButton().click();
 
         // return the current view
-        return GreetingHistoryViewTester.get(this);
+        return GreetingHistoryViewTester.$find(this);
     }
 
     /**
@@ -60,28 +47,44 @@ public class ClearHistoryConfirmDialogTester extends ConfirmDialogTester
         $clearButton().click();
 
         // return the current view
-        return GreetingHistoryViewTester.get(this);
+        return GreetingHistoryViewTester.$find(this);
     }
 
     /**
-     * Find the keep button tester.
+     * Find and return the ClearHistoryConfirmDialogTester.
+     *
+     * @param componentTester the context of the query
+     * @return the ClearHistoryConfirmDialogTester
+     * @param <T> the type of the {@link ComponentTester}
+     */
+    public static <T extends Component> ClearHistoryConfirmDialogTester $find(ComponentTester<T> componentTester) {
+        var clearHistoryConfirmDialog = componentTester.find(ClearHistoryConfirmDialog.class)
+                .withTextContaining("Clear Greeting History")
+                .single();
+        return new ClearHistoryConfirmDialogTester(clearHistoryConfirmDialog);
+    }
+
+    /**
+     * Find the keep button and get its tester.
      *
      * @return the keep button tester
      */
     private ButtonTester<Button> $keepButton() {
-        return test(find(Button.class)
+        var keepButton = find(Button.class)
                 .withText("Keep")
-                .single());
+                .single();
+        return test(keepButton);
     }
 
     /**
-     * Find the clear button tester.
+     * Find the clear button and get its tester.
      *
      * @return the clear button tester
      */
     private ButtonTester<Button> $clearButton() {
-        return test(find(Button.class)
+        var clearButton = find(Button.class)
                 .withText("Clear")
-                .single());
+                .single();
+        return test(clearButton);
     }
 }
