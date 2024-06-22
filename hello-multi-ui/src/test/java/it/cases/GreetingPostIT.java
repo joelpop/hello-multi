@@ -8,15 +8,15 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * E2E test cases for posting greetings.
+ * E2E tests for the greeting post use case.
  */
-class GreetIT extends BrowserDriverTestBase {
+class GreetingPostIT extends BrowserDriverTestBase {
 
     private HelloViewElement $helloView;
 
     @BeforeEach
     public void initAtHelloView() {
-        $helloView = HelloViewElement.get(this);
+        $helloView = HelloViewElement.$find(this);
     }
 
     /*

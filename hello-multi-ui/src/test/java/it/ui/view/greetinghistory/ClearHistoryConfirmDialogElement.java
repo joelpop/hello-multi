@@ -10,42 +10,31 @@ import com.vaadin.testbench.HasElementQuery;
 public class ClearHistoryConfirmDialogElement extends ConfirmDialogElement {
 
     /**
-     * Factory method to find and return the ClearHistoryConfirmDialogElement.
-     *
-     * @param hasElementQuery the context of the query
-     * @return the ClearHistoryConfirmDialogElement
-     */
-    public static ClearHistoryConfirmDialogElement $(HasElementQuery hasElementQuery) {
-        return hasElementQuery.$(ClearHistoryConfirmDialogElement.class)
-                .onPage()
-                .withTextContaining("Clear Greeting History")
-                .single();
-    }
-
-    /**
      * Keep the greeting history.
-     *
-     * @return the greeting history view
      */
-    public GreetingHistoryViewElement keepHistory() {
+    public void keepHistory() {
         // click the keep button
         $keepButton().click();
-
-        // return the current view
-        return GreetingHistoryViewElement.get(this);
     }
 
     /**
      * Clear the greeting history.
-     *
-     * @return the greeting history view
      */
-    public GreetingHistoryViewElement clearHistory() {
+    public void clearHistory() {
         // click the clear button
         $clearButton().click();
+    }
 
-        // return the current view
-        return GreetingHistoryViewElement.get(this);
+    /**
+     * Class method to find and return the ClearHistoryConfirmDialogElement.
+     *
+     * @param hasElementQuery the context of the query
+     * @return the ClearHistoryConfirmDialogElement
+     */
+    public static ClearHistoryConfirmDialogElement $find(HasElementQuery hasElementQuery) {
+        return hasElementQuery.$(ClearHistoryConfirmDialogElement.class)
+                .onPage()
+                .single();
     }
 
     /**

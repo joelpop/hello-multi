@@ -1,7 +1,6 @@
 package it.ui.view.greetinghistory;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
-import com.vaadin.flow.component.confirmdialog.testbench.ConfirmDialogElement;
 import com.vaadin.flow.component.html.testbench.AnchorElement;
 import com.vaadin.flow.component.html.testbench.DivElement;
 import com.vaadin.flow.component.html.testbench.SpanElement;
@@ -18,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * The page model object for GreetingHistoryView.
@@ -25,24 +25,12 @@ import java.util.List;
 @Attribute(name = "id", value = GreetingHistoryView.ID)
 public class GreetingHistoryViewElement extends VerticalLayoutElement {
 
-    /**
-     * Class method to find and return the GreetingHistoryViewElement.
-     *
-     * @param hasElementQuery the context of the query
-     * @return the GreetingHistoryViewElement
-     */
-    public static GreetingHistoryViewElement get(HasElementQuery hasElementQuery) {
-        return hasElementQuery.$(GreetingHistoryViewElement.class)
-                .onPage()
-                .first();
-    }
-
     public HelloViewElement goBack() {
         // click the back link
         $backLink().click();
 
         // return the HelloView
-        return HelloViewElement.get(this);
+        return HelloViewElement.$find(this);
     }
 
     /**
@@ -63,12 +51,12 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
      *
      * @return the resultant clear greeting history confirmation dialog
      */
-    public ConfirmDialogElement confirmClearGreetingHistory() {
+    public ClearHistoryConfirmDialogElement confirmClearGreetingHistory() {
         // click the clear button
         $clearButton().click();
 
         // return the clear greeting history confirmation dialog
-        return ClearHistoryConfirmDialogElement.$(this);
+        return ClearHistoryConfirmDialogElement.$find(this);
     }
 
     /**
@@ -77,7 +65,7 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
      * @param index the index of the greeting displayed
      * @return the resultant delete greeting confirmation dialog
      */
-    public ConfirmDialogElement confirmDeleteGreeting(int index) {
+    public DeleteGreetingConfirmDialogElement confirmDeleteGreeting(int index) {
         // find the item
         var $item = $greetingHistoryVirtualListRow(index);
 
@@ -85,14 +73,11 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
         $item.click();
 
         // return the delete greeting confirmation dialog
-        return DeleteGreetingConfirmDialogElement.$(this);
+        return DeleteGreetingConfirmDialogElement.$find(this);
     }
 
     public boolean isGreetingHistoryEmpty() {
-        return $(VerticalLayoutElement.class)
-                .withTextContaining("There are no greetings in the history log.")
-                .single()
-                .isDisplayed();
+        return ($greetingHistoryPlaceholder() != null);
     }
 
     public List<Greeting> getGreetings() {
@@ -135,6 +120,18 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
     }
 
     /**
+     * Class method to find and return the GreetingHistoryViewElement.
+     *
+     * @param hasElementQuery the context of the query
+     * @return the GreetingHistoryViewElement
+     */
+    public static GreetingHistoryViewElement $find(HasElementQuery hasElementQuery) {
+        return hasElementQuery.$(GreetingHistoryViewElement.class)
+                .onPage()
+                .first();
+    }
+
+    /**
      * Find the back link element.
      *
      * @return the back link element
@@ -168,13 +165,29 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
     }
 
     /**
+     * Find the greeting history placeholder element.
+     *
+     * @return the greeting history placeholder element
+     *   or {@code null} if not visible
+     */
+    private VerticalLayoutElement $greetingHistoryPlaceholder() {
+        try {
+            return $(VerticalLayoutElement.class)
+                    .withTextContaining("There are no greetings in the history log.")
+                    .single();
+        } catch (NoSuchElementException ignored) {
+            return null;
+        }
+    }
+
+    /**
      * Find the greeting history virtual list element.
      *
      * @return the greeting history virtual list element
      */
     private VirtualListPlusElement $greetingHistoryVirtualList() {
         return $(VirtualListPlusElement.class)
-                .single();
+                    .single();
     }
 
     /**

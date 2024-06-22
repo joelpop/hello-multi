@@ -10,42 +10,31 @@ import com.vaadin.testbench.HasElementQuery;
 public class DeleteGreetingConfirmDialogElement extends ConfirmDialogElement {
 
     /**
-     * Factory method to find and return the DeleteGreetingConfirmDialogElement.
-     *
-     * @param hasElementQuery the context of the query
-     * @return the DeleteGreetingConfirmDialogElement
-     */
-    public static DeleteGreetingConfirmDialogElement $(HasElementQuery hasElementQuery) {
-        return hasElementQuery.$(DeleteGreetingConfirmDialogElement.class)
-                .onPage()
-                .withTextContaining("Delete Greeting")
-                .single();
-    }
-
-    /**
      * Keep the greeting.
-     *
-     * @return the greeting history view
      */
-    public GreetingHistoryViewElement keepGreeting() {
+    public void keepGreeting() {
         // click the keep button
         $keepButton().click();
-
-        // return the current view
-        return GreetingHistoryViewElement.get(this);
     }
 
     /**
      * Clear the greeting.
-     *
-     * @return the greeting history view
      */
-    public GreetingHistoryViewElement deleteGreeting() {
+    public void deleteGreeting() {
         // click the delete button
         $deleteButton().click();
+    }
 
-        // return the current view
-        return GreetingHistoryViewElement.get(this);
+    /**
+     * Class method to find and return the DeleteGreetingConfirmDialogElement.
+     *
+     * @param hasElementQuery the context of the query
+     * @return the DeleteGreetingConfirmDialogElement
+     */
+    public static DeleteGreetingConfirmDialogElement $find(HasElementQuery hasElementQuery) {
+        return hasElementQuery.$(DeleteGreetingConfirmDialogElement.class)
+                .onPage()
+                .single();
     }
 
     /**

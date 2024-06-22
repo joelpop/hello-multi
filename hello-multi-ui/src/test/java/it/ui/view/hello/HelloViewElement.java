@@ -17,18 +17,6 @@ import org.joelpop.hellomulti.ui.view.hello.HelloView;
 public class HelloViewElement extends HorizontalLayoutElement {
 
     /**
-     * Class method to find and return the HelloViewElement.
-     *
-     * @param hasElementQuery the context of the query
-     * @return the HelloViewElement
-     */
-    public static HelloViewElement get(HasElementQuery hasElementQuery) {
-        return hasElementQuery.$(HelloViewElement.class)
-                .onPage()
-                .first();
-    }
-
-    /**
      * Enter the supplied name value, click the greet button, and return the notification.
      *
      * @param name the value to enter into the text field; use {@code null} or an empty String to clear it
@@ -56,6 +44,18 @@ public class HelloViewElement extends HorizontalLayoutElement {
 
         // return the resultant greeting history view
         return $greetingHistoryView();
+    }
+
+    /**
+     * Class method to find and return the HelloViewElement.
+     *
+     * @param hasElementQuery the context of the query
+     * @return the HelloViewElement
+     */
+    public static HelloViewElement $find(HasElementQuery hasElementQuery) {
+        return hasElementQuery.$(HelloViewElement.class)
+                .onPage()
+                .first();
     }
 
     /**
@@ -104,6 +104,6 @@ public class HelloViewElement extends HorizontalLayoutElement {
     }
 
     private GreetingHistoryViewElement $greetingHistoryView() {
-        return GreetingHistoryViewElement.get(this);
+        return GreetingHistoryViewElement.$find(this);
     }
 }

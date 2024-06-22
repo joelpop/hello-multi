@@ -3,7 +3,6 @@ package test.ui.view.greetinghistory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonTester;
-import com.vaadin.flow.component.confirmdialog.ConfirmDialogTester;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.testbench.DivTester;
@@ -62,7 +61,7 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
      *
      * @return the resultant clear greeting history confirmation dialog
      */
-    public ConfirmDialogTester confirmClearGreetingHistory() {
+    public ClearHistoryConfirmDialogTester confirmClearGreetingHistory() {
         // click the clear button
         $clearButton().click();
 
@@ -76,7 +75,7 @@ public class GreetingHistoryViewTester extends ComponentTester<GreetingHistoryVi
      * @param index the index of the greeting displayed
      * @return the resultant delete greeting confirmation dialog
      */
-    public ConfirmDialogTester confirmDeleteGreeting(int index) {
+    public DeleteGreetingConfirmDialogTester confirmDeleteGreeting(int index) {
         // find the item
         var $item = $greetingHistoryVirtualListRow(index);
 

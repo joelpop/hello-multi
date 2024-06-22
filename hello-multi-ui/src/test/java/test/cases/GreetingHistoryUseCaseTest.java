@@ -18,7 +18,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for the greeting history list use case.
+ * Tests for the greeting history use case.
  */
 @SpringBootTest(classes = Application.class)
 @ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
@@ -55,7 +55,7 @@ class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
     }
 
     /*
-     * Greet and verify greeting is correctly logged.
+     * Greet and verify single greeting is correctly logged.
      */
     @Test
     void greetOnceAndVerifyGreetingHistory() {
@@ -67,7 +67,7 @@ class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
     }
 
     /*
-     * Greet multiple times and verify greetings are correctly logged.
+     * Greet multiple times and verify all greetings are correctly logged.
      */
     @Test
     void greetALotAndVerifyGreetingHistory() {
@@ -78,6 +78,22 @@ class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
                 .toArray(String[]::new);
 
         greetAndVerifyGreetingHistory(names);
+    }
+
+    /*
+     * Verify clearing logged greetings shows placeholder.
+     */
+    @Test
+    void clearGreetingHistoryAndVerifyEmpty() {
+        // click "history" link to nav to greeting history view
+        var $greetingHistoryView = $helloView.viewHistory();
+
+        var $clearHistoryConfirmDialog = $greetingHistoryView.confirmClearGreetingHistory();
+        $clearHistoryConfirmDialog.clearHistory();
+
+        // verify there are no greetings in history (placeholder is shown)
+        assertThat($greetingHistoryView.isGreetingHistoryEmpty())
+                .isTrue();
     }
 
     private void greetAndVerifyGreetingHistory(String... names) {

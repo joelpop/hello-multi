@@ -30,33 +30,21 @@ public class VirtualListPlusElement extends VirtualListElement {
                             + (rowCount - 1) + "] but were [" + firstRowIndex
                             + ".." + lastRowIndex + "]");
         }
+
         var script = """
             var virtualList = arguments[0];
             var firstRowIndex = arguments[1];
             var lastRowIndex = arguments[2];
 
-            var rowsInDom = Array.from(virtualList.$.items.children)
+            return Array.from(virtualList.children)
                 .filter((item) => !item.hidden)
-                .sort((a, b) => a.index - b.index);
-
-            return Array.from(rowsInDom).filter((row) => {
-                return (row.index >= firstRowIndex) && (row.index <= lastRowIndex);
-            });
+                .sort((a, b) => a.__virtualIndex - b.__virtualIndex)
+                .filter((row) =>
+                    (row.__virtualIndex >= firstRowIndex) &&
+                    (row.__virtualIndex <= lastRowIndex));
         """;
-//        var script = """
-//            var virtualList = arguments[0];
-//            var firstRowIndex = arguments[1];
-//            var lastRowIndex = arguments[2];
-//
-//            var rowsInDom = Array.from(virtualList.__virtualizer.__adapter.$.items.children)
-//                .filter((item) => !item.hidden)
-//                .sort((a, b) => a.index - b.index);
-//
-//            return Array.from(rowsInDom).filter((row) => {
-//                return (row.index >= firstRowIndex) && (row.index <= lastRowIndex);
-//            });
-//        """;
-        var result = executeScript(script, this, firstRowIndex, lastRowIndex);
+        var result = executeScript(script, this,
+                (Integer) firstRowIndex, (Integer) lastRowIndex);
         if (!(result instanceof List<?> rows)) {
             return List.of();
         }
