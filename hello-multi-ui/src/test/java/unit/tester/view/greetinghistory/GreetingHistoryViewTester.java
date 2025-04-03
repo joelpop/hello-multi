@@ -1,4 +1,4 @@
-package unit.ui.view.greetinghistory;
+package unit.tester.view.greetinghistory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -16,7 +16,7 @@ import com.vaadin.testbench.unit.TesterWrappers;
 import com.vaadin.testbench.unit.Tests;
 import org.joelpop.hellomulti.ui.view.history.GreetingHistoryView;
 import org.joelpop.hellomulti.uimodel.model.Greeting;
-import unit.ui.view.hello.HelloViewTester;
+import unit.tester.view.hello.HelloViewTester;
 
 import java.util.List;
 import java.util.stream.IntStream;

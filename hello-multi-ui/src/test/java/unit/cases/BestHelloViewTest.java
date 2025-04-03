@@ -1,4 +1,4 @@
-package unit.ui.view.hello.withtesterrobust;
+package unit.cases;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonTester;
@@ -15,12 +15,13 @@ import org.joelpop.hellomulti.ui.view.hello.HelloView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import unit.UnitTestUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = Application.class)
-@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class HelloViewTest extends SpringUIUnitTest {
+@ViewPackages(packages = { UnitTestUtil.VIEW_PACKAGE_ROOT })
+class BestHelloViewTest extends SpringUIUnitTest {
 
     private ComponentTester<HelloView> $helloView;
 

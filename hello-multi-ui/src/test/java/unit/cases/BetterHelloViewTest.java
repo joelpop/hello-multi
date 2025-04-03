@@ -1,4 +1,4 @@
-package unit.ui.view.hello.withtester;
+package unit.cases;
 
 import com.vaadin.testbench.unit.SpringUIUnitTest;
 import com.vaadin.testbench.unit.ViewPackages;
@@ -7,13 +7,14 @@ import org.joelpop.hellomulti.ui.view.hello.HelloView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import unit.ui.view.hello.HelloViewTester;
+import unit.UnitTestUtil;
+import unit.tester.view.hello.HelloViewTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = Application.class)
-@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class HelloViewTest extends SpringUIUnitTest {
+@ViewPackages(packages = { UnitTestUtil.VIEW_PACKAGE_ROOT })
+class BetterHelloViewTest extends SpringUIUnitTest {
 
     private HelloViewTester $helloView;
 

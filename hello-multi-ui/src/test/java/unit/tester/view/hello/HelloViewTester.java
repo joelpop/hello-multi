@@ -1,4 +1,4 @@
-package unit.ui.view.hello;
+package unit.tester.view.hello;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -15,7 +15,7 @@ import com.vaadin.testbench.unit.ComponentTester;
 import com.vaadin.testbench.unit.TesterWrappers;
 import com.vaadin.testbench.unit.Tests;
 import org.joelpop.hellomulti.ui.view.hello.HelloView;
-import unit.ui.view.greetinghistory.GreetingHistoryViewTester;
+import unit.tester.view.greetinghistory.GreetingHistoryViewTester;
 
 @Tests(HelloView.class)
 public class HelloViewTester extends ComponentTester<HelloView>

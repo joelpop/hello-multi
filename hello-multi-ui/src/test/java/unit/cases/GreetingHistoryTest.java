@@ -11,7 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import unit.ui.view.hello.HelloViewTester;
+import unit.UnitTestUtil;
+import unit.tester.view.hello.HelloViewTester;
 
 import java.util.Arrays;
 
@@ -21,13 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests for the greeting history use case.
  */
 @SpringBootTest(classes = Application.class)
-@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
+@ViewPackages(packages = { UnitTestUtil.VIEW_PACKAGE_ROOT })
+class GreetingHistoryTest extends SpringUIUnitTest {
 
     private final GreetingService greetingService;
     private HelloViewTester $helloView;
 
-    public GreetingHistoryUseCaseTest(@Autowired GreetingService greetingService) {
+    public GreetingHistoryTest(@Autowired GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
@@ -74,7 +75,7 @@ class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
         // generate names
         var names = Instancio.stream(String.class)
                 .limit(100)
-                .map(GreetingHistoryUseCaseTest::capitalize)
+                .map(GreetingHistoryTest::capitalize)
                 .toArray(String[]::new);
 
         greetAndVerifyGreetingHistory(names);

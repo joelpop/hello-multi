@@ -1,4 +1,4 @@
-package unit.ui.view.greetinghistory;
+package unit.tester.view.greetinghistory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;

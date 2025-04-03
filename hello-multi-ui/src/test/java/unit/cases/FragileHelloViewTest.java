@@ -1,4 +1,4 @@
-package unit.ui.view.hello.fragile;
+package unit.cases;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
@@ -10,12 +10,13 @@ import org.joelpop.hellomulti.Application;
 import org.joelpop.hellomulti.ui.view.hello.HelloView;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import unit.UnitTestUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = Application.class)
-@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
-class HelloViewTest extends SpringUIUnitTest {
+@ViewPackages(packages = { UnitTestUtil.VIEW_PACKAGE_ROOT })
+class FragileHelloViewTest extends SpringUIUnitTest {
 
     @Test
     void greetWithNameEmpty() {
