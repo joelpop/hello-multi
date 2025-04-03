@@ -33,11 +33,11 @@ public class MockGreetingService implements GreetingService {
 
     @Override
     public void delete(Greeting greeting) {
-
+        // TODO implement MockGreetingService.delete()
     }
 
     @Override
     public void clear() {
-
+        // TODO implement MockGreetingService.clear()
     }
 }

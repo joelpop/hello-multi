@@ -1,35 +1,63 @@
-package it.cases;
+package unit.cases;
 
-import com.vaadin.testbench.BrowserTest;
-import it.ui.BrowserDriverTestBase;
-import it.ui.view.hello.HelloViewElement;
+import com.vaadin.testbench.unit.SpringUIUnitTest;
+import com.vaadin.testbench.unit.ViewPackages;
 import org.instancio.Instancio;
+import org.joelpop.hellomulti.Application;
+import org.joelpop.hellomulti.ui.view.hello.HelloView;
 import org.joelpop.hellomulti.uimodel.model.Greeting;
+import org.joelpop.hellomulti.uimodel.service.GreetingService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import unit.ui.view.hello.HelloViewTester;
 
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * E2E tests for the greeting history use case.
+ * Tests for the greeting history use case.
  */
-class GreetingHistoryIT extends BrowserDriverTestBase {
+@SpringBootTest(classes = Application.class)
+@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
+class GreetingHistoryUseCaseTest extends SpringUIUnitTest {
 
-    private HelloViewElement $helloView;
+    private final GreetingService greetingService;
+    private HelloViewTester $helloView;
+
+    public GreetingHistoryUseCaseTest(@Autowired GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
 
     @BeforeEach
-    void initAtHelloView() {
-        $helloView = HelloViewElement.$find(this);
+    void navigateToHelloView() {
+        // navigate to the view and get its tester
+        var helloView = navigate(HelloView.class);
+        $helloView = test(HelloViewTester.class, helloView);
+
+        // remove previous greetings accumulated in DB
+        greetingService.clear();
+    }
+
+    /*
+     * Verify no greetings have been logged.
+     */
+    @Test
+    void verifyInitialEmptyGreetingHistory() {
+        // click "history" link to nav to greeting history view
+        var $greetingHistoryView = $helloView.viewHistory();
+
+        // verify there are no greetings in history (placeholder is shown)
+        assertThat($greetingHistoryView.isGreetingHistoryEmpty())
+                .isTrue();
     }
 
     /*
      * Greet and verify single greeting is correctly logged.
      */
-    @BrowserTest
-    @Execution(ExecutionMode.SAME_THREAD)
+    @Test
     void greetOnceAndVerifyGreetingHistory() {
         // generate a name
         var name = capitalize(Instancio.of(String.class)
@@ -41,14 +69,12 @@ class GreetingHistoryIT extends BrowserDriverTestBase {
     /*
      * Greet multiple times and verify all greetings are correctly logged.
      */
-    @BrowserTest
-    @Execution(ExecutionMode.SAME_THREAD)
+    @Test
     void greetALotAndVerifyGreetingHistory() {
-        // create names
+        // generate names
         var names = Instancio.stream(String.class)
-//                .limit(50)
-                .limit(10)
-                .map(GreetingHistoryIT::capitalize)
+                .limit(100)
+                .map(GreetingHistoryUseCaseTest::capitalize)
                 .toArray(String[]::new);
 
         greetAndVerifyGreetingHistory(names);
@@ -57,8 +83,7 @@ class GreetingHistoryIT extends BrowserDriverTestBase {
     /*
      * Verify clearing logged greetings shows placeholder.
      */
-    @BrowserTest
-    @Execution(ExecutionMode.SAME_THREAD)
+    @Test
     void clearGreetingHistoryAndVerifyEmpty() {
         // click "history" link to nav to greeting history view
         var $greetingHistoryView = $helloView.viewHistory();
@@ -80,19 +105,21 @@ class GreetingHistoryIT extends BrowserDriverTestBase {
         // click "history" link to nav to greeting history view
         var $greetingHistoryView = $helloView.viewHistory();
 
+        // verify there are greetings in history (placeholder is not shown)
+        assertThat($greetingHistoryView.isGreetingHistoryEmpty())
+                .isFalse();
+
         // extract greetings from display
         var greetings = $greetingHistoryView.getGreetings();
-
-        var topGreetings = greetings.stream().limit(names.length).toList();
         var reversedNames = nameList.reversed();
 
-        // verify the names each have a greeting, in correct order
-        assertThat(topGreetings)
+        // verify the names each have their greeting, in correct order
+        assertThat(greetings)
                 .map(Greeting::getName)
                 .containsExactly(reversedNames.toArray(new String[0]));
 
         // verify the names each have their greeting message, in correct order
-        assertThat(topGreetings)
+        assertThat(greetings)
                 .map(Greeting::getMessage)
                 .containsExactly(reversedNames.stream()
                         .map(name -> name.isEmpty() ? "World" : name)
@@ -100,11 +127,11 @@ class GreetingHistoryIT extends BrowserDriverTestBase {
                         .toArray(String[]::new));
     }
 
-    private static String capitalize(String str) {
-        if (str == null || str.isEmpty()) {
-            return str;
+    private static String capitalize(String word) {
+        if ((word == null) || word.isEmpty()) {
+            return word;
         }
 
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
+        return Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
     }
 }

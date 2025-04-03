@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.joelpop</groupId>
         <artifactId>hello-multi</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>hello-multi-jpaclient</artifactId>

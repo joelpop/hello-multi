@@ -112,6 +112,10 @@ public class GreetingHistoryViewElement extends VerticalLayoutElement {
     }
 
     private Instant parseTimestamp(String formattedTimestamp) {
+        if (formattedTimestamp.isBlank()) {
+            return null;
+        }
+
         // parse the string to LocalDateTime using the client's time zone
         var localDateTime = LocalDateTime.parse(formattedTimestamp, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 

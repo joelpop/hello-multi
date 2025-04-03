@@ -4,27 +4,29 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.4.3</version>
         <relativePath/>
     </parent>
 
     <groupId>org.joelpop</groupId>
     <artifactId>hello-multi</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>Hello Multi</name>
     <packaging>pom</packaging>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>24.4.1</vaadin.version>
+        <vaadin.version>24.7.1</vaadin.version>
         <testng.version>7.10.2</testng.version>
-        <assertj.version>3.25.3</assertj.version>
-        <mockito.version>5.12.0</mockito.version>
+        <assertj.version>3.26.3</assertj.version>
+        <mockito.version>5.14.2</mockito.version>
         <instancio.version>4.6.0</instancio.version>
+        <selenium.version>4.30.0</selenium.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
     </properties>
 
     <modules>
@@ -151,6 +153,9 @@
                     </executions>
                     <configuration>
                         <trimStackTrace>false</trimStackTrace>
+                        <systemPropertyVariables>
+                            <java.util.logging.config.file>src/test/resources/logging.properties</java.util.logging.config.file>
+                        </systemPropertyVariables>
                     </configuration>
                 </plugin>
             </plugins>

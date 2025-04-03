@@ -1,28 +1,36 @@
-package it.cases;
+package unit.cases;
 
-import com.vaadin.testbench.BrowserTest;
-import it.ui.BrowserDriverTestBase;
-import it.ui.view.hello.HelloViewElement;
+import com.vaadin.testbench.unit.SpringUIUnitTest;
+import com.vaadin.testbench.unit.ViewPackages;
+import org.joelpop.hellomulti.Application;
+import org.joelpop.hellomulti.ui.view.hello.HelloView;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import unit.ui.view.hello.HelloViewTester;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * E2E tests for the greeting post use case.
+ * Tests for the greeting post use case.
  */
-class GreetingPostIT extends BrowserDriverTestBase {
+@SpringBootTest(classes = Application.class)
+@ViewPackages(packages = { "org.joelpop.hellomulti.ui.view" })
+class GreetingPostUseCaseTest extends SpringUIUnitTest {
 
-    private HelloViewElement $helloView;
+    private HelloViewTester $helloView;
 
     @BeforeEach
-    void initAtHelloView() {
-        $helloView = HelloViewElement.$find(this);
+    void navigateToHelloView() {
+        // navigate to the view and get its tester
+        var helloView = navigate(HelloView.class);
+        $helloView = test(HelloViewTester.class, helloView);
     }
 
     /*
      * Test with empty name.
      */
-    @BrowserTest
+    @Test
     void greetWithNameEmpty() {
         // issue greeting
         var $notification = $helloView.greetWithName("");
@@ -35,7 +43,7 @@ class GreetingPostIT extends BrowserDriverTestBase {
     /*
      * Test with name "World".
      */
-    @BrowserTest
+    @Test
     void greetWithNameWorld() {
         // issue greeting
         var $notification = $helloView.greetWithName("World");
@@ -48,7 +56,7 @@ class GreetingPostIT extends BrowserDriverTestBase {
     /*
      * Test with name "Waldo".
      */
-    @BrowserTest
+    @Test
     void greetWithNameWaldo() {
         // issue greeting
         var $notification = $helloView.greetWithName("Waldo");

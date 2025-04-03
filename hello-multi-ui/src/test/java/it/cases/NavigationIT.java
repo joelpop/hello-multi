@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * E2E tests for the navigation use case.
  */
-public class NavigationIT extends BrowserDriverTestBase {
+class NavigationIT extends BrowserDriverTestBase {
 
     private HelloViewElement $helloView;
 
     @BeforeEach
-    public void initAtHelloView() {
+    void initAtHelloView() {
         $helloView = HelloViewElement.$find(this);
     }
 
