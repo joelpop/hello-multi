@@ -1,4 +1,4 @@
-package it.ui.view.hello;
+package it.element.view.hello;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
 import com.vaadin.flow.component.html.testbench.AnchorElement;
@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.testbench.HorizontalLayoutElement
 import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
 import com.vaadin.testbench.HasElementQuery;
 import com.vaadin.testbench.annotations.Attribute;
-import it.ui.view.greetinghistory.GreetingHistoryViewElement;
+import it.element.view.greetinghistory.GreetingHistoryViewElement;
 import org.joelpop.hellomulti.ui.view.hello.HelloView;
 
 /**

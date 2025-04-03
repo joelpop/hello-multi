@@ -1,4 +1,4 @@
-package it.ui.view.greetinghistory;
+package it.element.view.greetinghistory;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
 import com.vaadin.flow.component.confirmdialog.testbench.ConfirmDialogElement;

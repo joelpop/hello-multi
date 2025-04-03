@@ -1,4 +1,4 @@
-package it.ui.view.greetinghistory;
+package it.element.view.greetinghistory;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
 import com.vaadin.flow.component.html.testbench.AnchorElement;
@@ -7,8 +7,8 @@ import com.vaadin.flow.component.html.testbench.SpanElement;
 import com.vaadin.flow.component.orderedlayout.testbench.VerticalLayoutElement;
 import com.vaadin.testbench.HasElementQuery;
 import com.vaadin.testbench.annotations.Attribute;
-import it.element.VirtualListPlusElement;
-import it.ui.view.hello.HelloViewElement;
+import it.element.component.VirtualListPlusElement;
+import it.element.view.hello.HelloViewElement;
 import org.joelpop.hellomulti.ui.view.history.GreetingHistoryView;
 import org.joelpop.hellomulti.uimodel.model.Greeting;
 

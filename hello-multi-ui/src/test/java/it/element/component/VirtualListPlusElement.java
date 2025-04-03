@@ -1,4 +1,4 @@
-package it.element;
+package it.element.component;
 
 import com.vaadin.flow.component.html.testbench.DivElement;
 import com.vaadin.flow.component.virtuallist.testbench.VirtualListElement;

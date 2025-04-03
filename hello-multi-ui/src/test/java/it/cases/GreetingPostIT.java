@@ -1,8 +1,8 @@
 package it.cases;
 
 import com.vaadin.testbench.BrowserTest;
-import it.ui.BrowserDriverTestBase;
-import it.ui.view.hello.HelloViewElement;
+import it.BrowserDriverTestBase;
+import it.element.view.hello.HelloViewElement;
 import org.junit.jupiter.api.BeforeEach;
 
 import static org.assertj.core.api.Assertions.assertThat;

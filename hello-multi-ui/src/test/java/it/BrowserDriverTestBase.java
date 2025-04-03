@@ -1,4 +1,4 @@
-package it.ui;
+package it;
 
 import com.vaadin.testbench.BrowserTestBase;
 import com.vaadin.testbench.DriverSupplier;
